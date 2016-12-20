@@ -1,0 +1,8 @@
+curl
+libxss1
+libappindicator1
+libindicator7
+cmake
+pkg-config
+gcc-4.9
+g++-4.9
