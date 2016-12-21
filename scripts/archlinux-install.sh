@@ -38,23 +38,28 @@ mount /dev/sdc1 /mnt/boot
 
 reporter "Ranking pacman mirrors"
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig
-rankmirrors -n 6 /etc/pacman.d/mirrorlist.orig >/etc/pacman.d/mirrorlist
+rankmirrors -n 6 /etc/pacman.d/mirrorlist.orig > /etc/pacman.d/mirrorlist
 pacman -Syy
 
 reporter "Installing base packages"
 pacstrap /mnt base base-devel
 
 reporter "Installing system"
-arch-chroot /mnt pacman -S syslinux --noconfirm
+arch-chroot /mnt pacman --no-confirm -S  \
+  alsa-firmware alsa-utils alsa-plugins  \
+  i3 dmenu xorg xorg-init xterm          \
+  openssh                                \
+  python2 python2-setuptools python2-pip \
+  syslinux
 
 reporter "Installing new ranked mirror list"
 cp /etc/pacman.d/mirrorlist* /mnt/etc/pacman.d
 
 reporter "Generating fstab"
-genfstab -p /mnt >>/mnt/etc/fstab
+genfstab -p /mnt >> /mnt/etc/fstab
 
 reporter "Chroot-ing into /mnt"
-arch-chroot /mnt /bin/bash <<EOF
+arch-chroot /mnt /bin/bash << END_OF_CHROOT
 
 ## Turn comments into literal programming, including output during execution.
 function reporter() {
@@ -94,7 +99,7 @@ reporter "Setting initial password to \"root\""
 echo root:root | chpasswd
 
 # end section sent to chroot
-EOF
+END_OF_CHROOT
 
 # unmount
 umount /mnt/{boot,}

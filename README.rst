@@ -12,5 +12,6 @@ Acknowledgements
 ================
 
 * Thanks to `EricCrosson <https://github.com/EricCrosson/esc>`_ and
-  `wuputah <https://gist.github.com/wuputah/4982514>`_ for the original gists.
+  `wuputah <https://gist.github.com/wuputah/4982514>`_ for the original gists
+  to bootstrap archlinux.
 
