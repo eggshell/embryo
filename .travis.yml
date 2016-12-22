@@ -1,3 +1,13 @@
-language: bash
-script:
-  - bash -n scripts/archlinux-install.sh
+sudo: required
+dist: trusty
+matrix:
+  fast_finish: true
+
+env:
+  - TEST_RUN="bash -n archlinux/archlinux-install.sh"
+  - TEST_RUN="bash ubuntu/ubuntugnome-install.sh"
+
+script: "$TEST_RUN"
+
+notifications:
+  email: False

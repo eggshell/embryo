@@ -1,4 +1,7 @@
 aisleriot
+brasero
+brasero-cdrkit
+brasero-common
 cheese
 evolution
 file-roller
@@ -7,8 +10,6 @@ gnome-mines
 gnome-orca
 gnome-sudoku
 gnome-sushi
-rhythmbox
-shotwell
 libreoffice-avmedia-backend-gstreamer
 libreoffice-base-core
 libreoffice-calc
@@ -25,10 +26,9 @@ libreoffice-pdfimport
 libreoffice-presentation-minimizer
 libreoffice-style-tango
 libreoffice-writer
-brasero
-brasero-cdrkit
-brasero-common
 libbrasero-media3-1
-wodim
+rhythmbox
+shotwell
 transmission-common
 transmission-gtk
+wodim
