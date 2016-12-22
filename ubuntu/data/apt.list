@@ -1,3 +1,4 @@
+chromium-browser
 curl
 deluge
 git
@@ -5,6 +6,7 @@ hexchat
 mpg123
 nvidia-375
 nvidia-settings
+openvpn
 python-pip
 stow
 vim
