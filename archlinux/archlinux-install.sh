@@ -74,15 +74,15 @@ function reporter() {
 }
 
 reporter "Setting initial hostname"
-echo "eggcrate" >/etc/hostname
+echo "eggcrate" > /etc/hostname
 
 reporter "Setting timezone to US Central"
 ln -s /usr/share/zoneinfo/America/Chicago /etc/localtime
 
 reporter "Setting locale"
-locale >/etc/locale.conf
-echo "en_US.UTF-8 UTF-8" >>/etc/locale.gen
-echo "en_US ISO-8859-1" >>/etc/locale.gen
+locale > /etc/locale.conf
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+echo "en_US ISO-8859-1" >> /etc/locale.gen
 locale-gen
 
 reporter "Creating initial ramdisk environment"
