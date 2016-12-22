@@ -63,6 +63,11 @@ function main() {
   reporter "Installing pip packages"
   sudo pip install -qr $INSTALL_DIR/data/pip.list
 
+  reporter "Installing Google Play Music desktop app"
+  wget -q "https://github.com/MarshallOfSound/Google-Play-Music-Desktop-Player-UNOFFICIAL-/releases/download/v4.0.5/google-play-music-desktop-player_4.0.5_amd64.deb" -P /tmp/googleplay
+  sudo dpkg -i /tmp/googleplay/google*
+  sudo apt-get install -f
+
   reporter "Installing oh-my-zsh"
   current_user=$(whoami)
   sudo usermod -s /usr/bin/zsh $current_user
