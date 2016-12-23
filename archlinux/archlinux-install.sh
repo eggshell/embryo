@@ -4,14 +4,14 @@
 
 ## Turn comments into literal programming, including output during execution.
 function reporter() {
-    message="$1"
-    shift
-    echo
-    echo "${message}"
-    for (( i=0; i<${#message}; i++ )); do
-        echo -n '-'
-    done
-    echo
+  message="$1"
+  shift
+  echo
+  echo "${message}"
+  for (( i=0; i<${#message}; i++ )); do
+      echo -n '-'
+  done
+  echo
 }
 
 reporter "Confirming internet connection"
@@ -63,14 +63,14 @@ arch-chroot /mnt /bin/bash << END_OF_CHROOT
 
 ## Turn comments into literal programming, including output during execution.
 function reporter() {
-    message="$1"
-    shift
-    echo
-    echo "${message}"
-    for (( i=0; i<${#message}; i++ )); do
-        echo -n '-'
-    done
-    echo
+  message="$1"
+  shift
+  echo
+  echo "${message}"
+  for (( i=0; i<${#message}; i++ )); do
+      echo -n '-'
+  done
+  echo
 }
 
 reporter "Setting initial hostname"
