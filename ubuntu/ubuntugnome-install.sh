@@ -15,11 +15,11 @@ INSTALL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Turn comments into literal programming, including output during execution.
 function reporter() {
-  message="$1"
+  MESSAGE="$1"
   shift
   echo
-  echo "${message}"
-  for (( i=0; i<${#message}; i++ )); do
+  echo "${MESSAGE}"
+  for (( i=0; i<${#MESSAGE}; i++ )); do
       echo -n '-'
   done
   echo
@@ -64,36 +64,37 @@ function main() {
   sudo pip install -qr $INSTALL_DIR/data/pip.list
 
   reporter "Installing Google Play Music desktop app"
-  wget -q "https://github.com/MarshallOfSound/Google-Play-Music-Desktop-Player-UNOFFICIAL-/releases/download/v4.0.5/google-play-music-desktop-player_4.0.5_amd64.deb" -P /tmp/googleplay
+  GPMD_LINK="https://github.com/MarshallOfSound/Google-Play-Music-Desktop-Player-UNOFFICIAL-/releases/download/v4.0.5/google-play-music-desktop-player_4.0.5_amd64.deb"
+  wget -q $GPMD_LINK -P /tmp/googleplay
   sudo dpkg -i /tmp/googleplay/google*
   sudo apt-get install -f
 
   reporter "Installing oh-my-zsh"
-  current_user=$(whoami)
-  sudo usermod -s /usr/bin/zsh $current_user
+  CURRENT_USER=$(whoami)
+  sudo usermod -s /usr/bin/zsh $CURRENT_USER
   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | grep -Ev 'chsh -s|env zsh')"
 
   reporter "Removing old config files"
-  old_configs=".bash_profile .bash_rc .zshrc .vimrc .vim .gitconfig"
-  for config in ${old_configs}; do
-      rm -rf $HOME/${config}
+  OLD_CONFIGS=".bash_profile .bash_rc .zshrc .vimrc .vim .gitconfig"
+  for CONFIG in ${OLD_CONFIGS}; do
+      rm -rf $HOME/${CONFIG}
   done
 
   reporter "Cloning zsh-syntax-highlighting"
   mkdir $HOME/dev; mkdir $HOME/dev/utils;
-  syntax_dir=$HOME/dev/utils/zsh-syntax-highlighting
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${syntax_dir}
+  SYNTAX_DIR=$HOME/dev/utils/zsh-syntax-highlighting
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${SYNTAX_DIR}
 
   reporter "Grabbing and stowing dotfiles"
-  dotfiles_repo=https://github.com/CullenTaylor/dotfiles.git
-  dotfiles_destination=$HOME/dotfiles
-  dotfiles_branch=master
-  stow_list="bash git htop vim zsh sounds"
+  DOTFILES_REPO=https://github.com/CullenTaylor/dotfiles.git
+  DOTFILES_DESTINATION=$HOME/dotfiles
+  DOTFILES_BRANCH=master
+  STOW_LIST="bash git htop vim zsh sounds"
 
-  git clone ${dotfiles_repo} ${dotfiles_destination}
-  cd ${dotfiles_destination}
-  git checkout ${dotfiles_branch}
-  for app in ${stow_list}; do
+  git clone ${DOTFILES_REPO} ${DOTFILES_DESTINATION}
+  cd ${DOTFILES_DESTINATION}
+  git checkout ${DOTFILES_BRANCH}
+  for app in ${STOW_LIST}; do
       stow ${app}
   done
   cd ${HOME}
