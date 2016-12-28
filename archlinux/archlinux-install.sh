@@ -2,6 +2,8 @@
 # Written by eggshell, esc, wuputah
 # 2016-12-20
 
+set -e
+
 ## Turn comments into literal programming, including output during execution.
 function reporter() {
   message="$1"

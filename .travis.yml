@@ -1,11 +1,19 @@
 sudo: required
 dist: trusty
+services:
+  - docker
 language: generic
 matrix:
   fast_finish: true
 
+before_install:
+  - docker pull eggshell/archlinux
+  - docker run -h arch -dit --name="arch" eggshell/archlinux /bin/bash
+  - docker cp archlinux/archlinux-install.sh arch:/archlinux-install.sh
+  - docker exec arch /bin/bash -c 'pacman -S parted --noconfirm'
+
 env:
-  - TEST_RUN="bash -n archlinux/archlinux-install.sh"
+  - TEST_RUN="docker exec arch /bin/bash -c './archlinux-install.sh'"
   - TEST_RUN="bash ubuntu/ubuntugnome-install.sh"
 
 script: "$TEST_RUN"
