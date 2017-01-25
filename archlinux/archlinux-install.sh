@@ -47,7 +47,7 @@ reporter "Installing base packages"
 pacstrap /mnt base base-devel
 
 reporter "Installing system"
-arch-chroot /mnt pacman --no-confirm -S  \
+arch-chroot /mnt pacman --noconfirm -S  \
   alsa-firmware alsa-utils alsa-plugins  \
   i3 dmenu xorg xorg-init xterm          \
   openssh                                \
