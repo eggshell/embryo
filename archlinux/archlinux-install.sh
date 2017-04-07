@@ -25,18 +25,18 @@ else
 fi
 
 reporter "Making 2 partitions -- boot and root -- on ssd"
-parted -s /dev/sdc mktable msdos
-parted -s /dev/sdc mkpart primary 0% 100m
-parted -s /dev/sdc mkpart primary 100m 100%
+parted -s /dev/sda mktable msdos
+parted -s /dev/sda mkpart primary 0% 100m
+parted -s /dev/sda mkpart primary 100m 100%
 
 reporter "Making filesystems"
-mkfs.ext2 /dev/sdc1  # /boot
-mkfs.btrfs /dev/sdc2 # /
+mkfs.ext2 /dev/sda1  # /boot
+mkfs.btrfs -f /dev/sda2 # /
 
 reporter "Setting up /mnt"
-mount /dev/sdc2 /mnt
+mount /dev/sda2 /mnt
 mkdir /mnt/boot
-mount /dev/sdc1 /mnt/boot
+mount /dev/sda1 /mnt/boot
 
 reporter "Ranking pacman mirrors"
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.orig
@@ -46,12 +46,17 @@ pacman -Syy
 reporter "Installing base packages"
 pacstrap /mnt base base-devel
 
+# TODO: revisit package ordering
 reporter "Installing system"
-arch-chroot /mnt pacman --noconfirm -S  \
-  alsa-firmware alsa-utils alsa-plugins  \
-  i3 dmenu xorg xorg-init xterm          \
-  openssh                                \
-  python2 python2-setuptools python2-pip \
+arch-chroot /mnt pacman --noconfirm -S                 \
+  alsa-firmware alsa-utils alsa-plugins                \
+  i3-wm i3lock i3status dmenu                          \
+  xorg-xinit xorg-server xorg-server-devel xorg-xrdb   \
+  openssh git rxvt-unicode firefox xscreensaver        \
+  pulseaudio pulseaudio-alsa pavucontrol               \
+  ttf-dejavu ttf-freefont ttf-arphic-uming ttf-baekmuk \
+  redshift                                             \
+  python2 python2-setuptools python2-pip               \
   syslinux
 
 reporter "Installing new ranked mirror list"
@@ -94,7 +99,7 @@ reporter "Installing syslinux bootloader"
 syslinux-install_update -i -a -m
 
 reporter "Updating syslinux config with correct root disk"
-sed 's/root=.*/root=\/dev\/sdc2 ro/' < /boot/syslinux/syslinux.cfg > /boot/syslinux/syslinux.cfg.new
+sed 's/root=.*/root=\/dev\/sda2 ro/' < /boot/syslinux/syslinux.cfg > /boot/syslinux/syslinux.cfg.new
 mv /boot/syslinux/syslinux.cfg.new /boot/syslinux/syslinux.cfg
 
 reporter "Setting initial password to \"root\""
